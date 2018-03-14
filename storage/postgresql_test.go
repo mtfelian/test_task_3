@@ -6,7 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/mtfelian/test_task_3/config"
-	"github.com/mtfelian/test_task_3/model1"
+	"github.com/mtfelian/test_task_3/models"
 	"github.com/mtfelian/test_task_3/storage"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -14,8 +14,8 @@ import (
 )
 
 // model1Model returns a pointer to a valid test model
-var model1Model = func() *model1.Model {
-	return &model1.Model{}
+var model1Model = func() *models.Param {
+	return &models.Param{}
 }
 
 // initDB initializes DB for tests with given DSN string
@@ -25,9 +25,8 @@ func initDB(DSN string) *gorm.DB {
 	return db
 }
 
-func expectModelsAreEqual(model1, model2 model1.Model) {
+func expectModelsAreEqual(model1, model2 models.Param) {
 	model1.ID, model2.ID = 0, 0
-	model1.CreatedAt, model2.CreatedAt = time.Time{}, time.Time{}
 	Expect(model1).To(Equal(model2))
 }
 

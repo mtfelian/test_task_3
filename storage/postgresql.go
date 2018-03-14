@@ -9,7 +9,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/mtfelian/test_task_3/config"
-	"github.com/mtfelian/test_task_3/model1"
+	"github.com/mtfelian/test_task_3/models"
 	"github.com/spf13/viper"
 )
 
@@ -53,12 +53,12 @@ func (s Postgres) GenerateTestEntries(amount, bulkSize uint) error {
 				time.Now().Sub(ts).Seconds())
 		}
 
-		var models []model1.Model
+		var params []models.Param
 		for j := uint(0); j < bulkSize; j++ {
 			// generate model fields
-			models = append(models, model1.Model{})
+			params = append(params, models.Param{})
 		}
-		if err := s.AddMultiple(models); err != nil {
+		if err := s.AddMultiple(params); err != nil {
 			return err
 		}
 	}
@@ -83,8 +83,8 @@ type Postgres struct {
 }
 
 // AddMultiple entries
-func (s Postgres) AddMultiple(entries []model1.Model) error {
-	sql := fmt.Sprintf(`INSERT INTO %s (created_at) VALUES `, model1.Model{}.TableName()) // (created_at, ...)
+func (s Postgres) AddMultiple(entries []models.Param) error {
+	sql := fmt.Sprintf(`INSERT INTO %s (created_at) VALUES `, models.Param{}.TableName()) // (created_at, ...)
 	params := []interface{}{}
 	for _, entry := range entries {
 		sql += `(?), ` // (?, ?, ...)
@@ -97,13 +97,13 @@ func (s Postgres) AddMultiple(entries []model1.Model) error {
 }
 
 // Add a new entry
-func (s Postgres) Add(entry *model1.Model) error {
+func (s Postgres) Add(entry *models.Param) error {
 	return s.DB().Save(entry).Error
 }
 
 // Get a model by ID
-func (s Postgres) Get(ID uint) (*model1.Model, error) {
-	var model model1.Model
+func (s Postgres) Get(ID uint) (*models.Param, error) {
+	var model models.Param
 	err := s.DB().First(&model, ID).Error
 	if err == gorm.ErrRecordNotFound {
 		return nil, nil
@@ -116,5 +116,5 @@ func (s Postgres) Get(ID uint) (*model1.Model, error) {
 
 // DeleteAll deletes all rows
 func (s Postgres) DeleteAll() error {
-	return s.DB().Unscoped().Delete(model1.Model{}).Error
+	return s.DB().Unscoped().Delete(models.Param{}).Error
 }

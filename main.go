@@ -30,6 +30,5 @@ func main() {
 
 // RegisterHTTPAPIHandlers registers HTTP API handlers
 func RegisterHTTPAPIHandlers(router *gin.Engine) {
-
-	router.GET("/ping", api.Ping)
+	router.POST("/param", api.GetParam)
 }
