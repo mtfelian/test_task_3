@@ -1,4 +1,4 @@
-# Test task 3
+# Test task for Imhio Ltd
 
 This is a test task for `Imhio Ltd`.
 
