@@ -49,8 +49,6 @@ var _ = Describe("register suite hooks", func() {
 		viper.Set(config.Port, uint(port))
 
 		Expect(s.Storage).NotTo(BeNil())
-		Expect(s.Storage.DeleteAll()).To(Succeed())
-		Expect(s.Storage.GenerateTestEntries(1000, 200)).To(Succeed())
 	})
 
 	AfterSuite(func() { server.Close() })

@@ -14,9 +14,8 @@ import (
 
 var _ = Describe("checking config", func() {
 	It("checks loading from file", func() {
-		const (
-			port = 3000
-		)
+		const port = 3000
+
 		contents := []byte(fmt.Sprintf(`{%s:%d}`, strconv.Quote(Port), port))
 		wd, err := os.Getwd()
 		Expect(err).NotTo(HaveOccurred())

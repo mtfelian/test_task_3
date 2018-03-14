@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"encoding/json"
@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	e "github.com/mtfelian/error"
+	"github.com/mtfelian/test_task_3/service"
 	"github.com/mtfelian/validation"
 )
 
@@ -29,7 +30,7 @@ func extractBody(c *gin.Context, to interface{}) error {
 	return json.Unmarshal(body, to)
 }
 
-// GetParamBody represents request body for the GetParam API handler
+// GetParamBody represents request body for the getParam API handler
 type GetParamBody struct {
 	Type string
 	Data string
@@ -46,8 +47,8 @@ func (p *GetParamBody) Validate() (bool, string) {
 	return v.HasErrors(), v.String()
 }
 
-// GetParam is an API handler to get configuration entry
-func GetParam(c *gin.Context) {
+// getParam is an API handler to get configuration entry
+func getParam(c *gin.Context) {
 	var body GetParamBody
 	if err := extractBody(c, &body); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, e.NewError(ErrorInvalidInput, err))
@@ -60,4 +61,11 @@ func GetParam(c *gin.Context) {
 		return
 	}
 
+	param, err := service.Get().Storage.Get(body.Type, body.Data)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, e.NewError(ErrorStorage, err))
+		return
+	}
+
+	c.String(http.StatusOK, string(param.Value))
 }

@@ -1,9 +1,9 @@
-package api_test
+package main_test
 
 import (
 	"fmt"
 
-	"github.com/mtfelian/test_task_3/api"
+	"github.com/mtfelian/test_task_3"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -11,13 +11,13 @@ import (
 var _ = Describe("validation tests", func() {
 	It("tests validation of GetParamsBody", func() {
 		testCases := []struct {
-			in      api.GetParamBody
+			in      main.GetParamBody
 			isValid bool
 		}{
-			{api.GetParamBody{Type: "t", Data: "d"}, true},
-			{api.GetParamBody{Type: "t", Data: ""}, false},
-			{api.GetParamBody{Type: "", Data: "d"}, false},
-			{api.GetParamBody{Type: "", Data: ""}, false},
+			{main.GetParamBody{Type: "t", Data: "d"}, true},
+			{main.GetParamBody{Type: "t", Data: ""}, false},
+			{main.GetParamBody{Type: "", Data: "d"}, false},
+			{main.GetParamBody{Type: "", Data: ""}, false},
 		}
 
 		for i, tc := range testCases {

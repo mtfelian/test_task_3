@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mtfelian/test_task_3/api"
 	"github.com/mtfelian/test_task_3/config"
 	"github.com/mtfelian/test_task_3/service"
 	"github.com/spf13/viper"
@@ -30,5 +29,5 @@ func main() {
 
 // RegisterHTTPAPIHandlers registers HTTP API handlers
 func RegisterHTTPAPIHandlers(router *gin.Engine) {
-	router.POST("/param", api.GetParam)
+	router.POST("/param", getParam)
 }

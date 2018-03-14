@@ -4,11 +4,8 @@ import (
 	"github.com/mtfelian/test_task_3/models"
 )
 
-// Keeper provides access log storage abstraction
+// Keeper provides storage abstraction
 type Keeper interface {
-	GenerateTestEntries(amount, bulkSize uint) error
-	Add(entry *models.Param) error
-	AddMultiple(entries []models.Param) error
-	Get(ID uint) (*models.Param, error)
-	DeleteAll() error
+	Get(_type, data string) (*models.Param, error)
+	Close() error // just for testing purposes
 }
